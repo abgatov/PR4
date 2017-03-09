@@ -45,8 +45,8 @@ public abstract class Obstacle extends GridObject
   {
     symbol = c;
   }
-	public int getDir()
-	{
-		return dir;
-	}
+  public int getDir()
+  {
+    return dir;
+  }
 }
