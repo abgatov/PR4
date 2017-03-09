@@ -37,8 +37,8 @@ public abstract class Obstacle extends GridObject
     color = c;
   }
   public String getSymbol()
-    {
-	if (symbol == null || dir != NONE) return dirSymbols[dir];
+  {
+    if (symbol == null || dir != NONE) return dirSymbols[dir];
     return symbol;
   }
   public void setSymbol( String c)
