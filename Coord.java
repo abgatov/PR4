@@ -1,23 +1,37 @@
+/**
+ * @author Antonio Martorana, Alex Bgatov
+ * @version March 8, 2017
+ */
 
 /**
- * @author Antonio Martorana, Aleksandr Bgatov
- * @version March 8, 2017
+ * | x | means that absolute value of x
+ * x^2 means x * x
+ * sign(x) means -1 if x < 0, 1 otherwise
+ * iff means "if and only if"
+ * Implementation notes:
+ * compareTo -- compares the dist2(Origin) of the each Coord instance. a null instance is infinitely far
+ * from the Origin
+ * equals() compares row == row and col == col for the two instances
+ * toString format is Coord:(row=%f,col=%f)
  */
 
 import java.lang.Math;
 
-public class Coord extends java.lang.object implements java.lang.Comparable<Coord> 
+/**
+ * Coord class describes coordinates on a grid
+ */
+public class Coord implements Comparable<Coord>
 {
   public final int row;
   public final int col;
 
 
-  //Constructors
-  public Coord() 
-  {
-    this.row = 0;
-    this.col = 0;
-  }
+    //Constructors
+    public Coord ()
+    {
+       this.row = 0;
+       this.col = 0;
+   }
 
   public Coord(Coord other) 
   {
@@ -36,7 +50,7 @@ public class Coord extends java.lang.object implements java.lang.Comparable<Coor
   {
     if (b == null) { return null; }
     else {
-      return new Coord(Math.abs(row - b.row),Math.abs(col - a.col));
+      return new Coord(Math.abs(row - b.row),Math.abs(col - b.col));
     }
   }
 
@@ -44,14 +58,19 @@ public class Coord extends java.lang.object implements java.lang.Comparable<Coor
   {
     if (b == null) { return null; }
     else {
-      return new Coord((row - b.row),(col - a.col));
+      return new Coord((row - b.row),(col - b.col));
     }
   }
 
   public int dist2(Coord b) 
   {
-    if (b = null) { return Integer.MAX_VALUE; }
-    else { return ((dist(b).row)*(dist(b).row) +(dist(b).col)*(dist(b).col)); }
+    if (b == null) { return Integer.MAX_VALUE; }
+    else 
+    {
+    	Double secondDistance = Math.pow((dist(b).row), 2) + Math.pow((dist(b).col), 2);
+    	int adjustedDistance = secondDistance.intValue();
+    	return adjustedDistance;
+    }
   }
 
   public Coord unit ()
@@ -66,13 +85,30 @@ public class Coord extends java.lang.object implements java.lang.Comparable<Coor
   public Coord add(Coord b) 
   {
     if (b == null) { return null; }
-    else { return (new Coord(row + b.row,col + a.col)); }
+    else { return (new Coord(row + b.row,col + b.col)); }
   }
 
   public int compareTo (Coord other)
   {
-    Coord origin = new Coord();
-    return (dist2(origin).compareTo(dist2(other)));
+     Coord origin = new Coord();
+     int comparison1 = 0;
+     int comparison2 = 0;
+
+     comparison1 = dist2(origin);
+     comparison2 = dist2(other);
+     
+     if(comparison1 > comparison2)
+     {
+     	return 1;
+     }
+     else if(comparison1 < comparison2)
+     {
+     	return -1;
+     }
+     else
+     {
+     	return 0;
+     }
   }
 
   @Override
@@ -84,12 +120,9 @@ public class Coord extends java.lang.object implements java.lang.Comparable<Coor
   }
 
   @Override
-  public java.lang.String toString ()
+  public String toString ()
   {
-    String x = "Coord:(row =";
-    String y = ",col=";
-    String z = ")";
-    return x + row + y + col + z;
+    return ("Coord:(row=" + row + ",col=" + col + ")");
   }
-}
 
+}
