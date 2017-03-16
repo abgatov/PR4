@@ -6,7 +6,6 @@
 import java.lang.Math;
 import java.util.ArrayList;
 import java.awt.*;
-import objectdraw.*;
 
 /**
  * Grid creates a grid object which also hold
@@ -43,15 +42,20 @@ public class Grid implements GridInfo, CoordInfo
 	   int i = loc.row;
 	   int j = loc.col;
 
-	   if(gridInfo[i][j] == false)
+       if(i >= 0 && i<= row)
 	   {
-	   	  carInfo[i][j] = car;
-	   	  car.setLocation(loc);
-	   	  gridInfo[i][j] = true;
+	   	  if(j >= 0 && j<= col)
+	   	  {
+             if(gridInfo[i][j] == false)
+	         {
+	   	        carInfo[i][j] = car;
+	   	        car.setLocation(loc);
+	   	        gridInfo[i][j] = true;
 
-	   	  return true;
+	   	        return true;
+	         }	   	     
+	   	  }
 	   }
-
 	   return false;
 	}
 
@@ -69,7 +73,21 @@ public class Grid implements GridInfo, CoordInfo
 	*/
 	public boolean coordFree(Coord loc)
 	{
-		return true;
+	   int i = loc.row;
+	   int j = loc.col;
+        
+	   if(i >= 0 && i<= row)
+	   {
+	   	  if(j >= 0 && j<= col)
+	   	  {
+	   	     if(gridInfo[i][j] == false)
+	   	     {
+	   	        return true;
+	   	     }
+	   	  }
+	   }
+
+	   return false;
 	}
 
 	public void drive()
@@ -118,15 +136,21 @@ public class Grid implements GridInfo, CoordInfo
 
        testRow = desiredLoc.row;
        testCol = desiredLoc.col;
- 
-       if(gridInfo[testRow][testCol] == false)
-	   {
-		  carInfo[testRow][testCol] = new SharedCar (actualController,this);
-		  carInfo[testRow][testCol].setLocation(desiredLoc);
-	      gridInfo[testRow][testCol] = true;
 
-	      return true;
- 	   }
+       if(testRow >= 0 && testRow<= row)
+	   {
+	   	  if(testCol >= 0 && testCol<= col)
+	   	  {
+             if(gridInfo[testRow][testCol] == false)
+	         {
+		        carInfo[testRow][testCol] = new SharedCar (actualController,this);
+		        carInfo[testRow][testCol].setLocation(desiredLoc);
+	            gridInfo[testRow][testCol] = true;
+
+	            return true;
+ 	         }	   	     
+	   	  }
+	   }
 
  	   return false;
 	} //Remember that actualController must be converted from String to CarController in main method after being parsed
@@ -159,13 +183,20 @@ public class Grid implements GridInfo, CoordInfo
 	   i = desiredLoc.row;
 	   j = desiredLoc.col;
 
-	   if(gridInfo[i][j] == false)
-	   {
-	   	  this.rider = new Rider ();
-	   	  gridInfo[i][j] = true;
-	   	  rider.setLocation(desiredLoc);
 
-	   	  return true;
+       if(i >= 0 && i<= row)
+	   {
+	   	  if(j >= 0 && j<= col)
+	   	  {
+	         if(gridInfo[i][j] == false)
+	         {
+	   	        this.rider = new Rider ();
+	   	        gridInfo[i][j] = true;
+	   	        rider.setLocation(desiredLoc);
+
+	   	        return true;
+	         }
+	   	  }
 	   }
 
 	   return false;
@@ -198,13 +229,20 @@ public class Grid implements GridInfo, CoordInfo
        int j = desiredLoc.col;
        Obstacle newObstacle = null;
 
-       if(gridInfo[i][j] == false)
-       {
-       	  gridInfo[i][j] = true;
-       	  obstacleInfo[i][j] = new Obstacle(desiredLoc);
 
-       	  return true;
-       }
+       if(i >= 0 && i<= row)
+	   {
+	   	  if(j >= 0 && j<= col)
+	   	  {
+	         if(gridInfo[i][j] == false)
+             {
+       	        gridInfo[i][j] = true;
+       	        obstacleInfo[i][j] = new Obstacle(desiredLoc);
+
+       	        return true;
+             }
+	   	  }
+	   }
 
        return false;     
 	}
@@ -229,16 +267,39 @@ public class Grid implements GridInfo, CoordInfo
        return false;     
 	}
 
-
-
 	@Override
 	public String toString()
 	{
 		String s = "";
 
-		for(int i = 0; i < carInfo.length; i++)
+		for(int i = 0; i < row; i++)
 		{
-		   for(int j = 0; j < carInfo.)
-		}
+		   for(int j = 0; j < col; j++)
+		   {
+		   	  if(i == 0)
+		   	  {
+		   	     s += "=";
+		   	  }
+		   	  if(j == 0)
+		   	  {
+		   	     s += "|";
+		   	  }
+		   	  if(carInfo[i][j] != null)
+		   	  {
+		   	     s += carInfo[i][j].getSymbol();
+		   	  }
+		   	  else if(obstacleInfo[i][j] != null)
+		      {
+		         s += obstacleInfo[i][j].getSymbol();
+		      }
+		   	  else
+		   	  {
+		   	     s += " ";
+		   	  }
+		   }// end first for loop
+           
+           s += "\n";
+
+		} //end final for loop check for gridobjects
 	}
 }

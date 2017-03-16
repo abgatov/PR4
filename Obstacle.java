@@ -1,6 +1,11 @@
+/**
+ * @author Antonio Martorana, Alex Bgatov
+ * @version March 8, 2017
+ */
+
 import java.awt.Color;
 
-public abstract class Obstacle extends GridObject
+public class Obstacle extends GridObject
 {
   /* Directions that GridObjects can point */
   public static final int NONE = 0;
@@ -15,38 +20,12 @@ public abstract class Obstacle extends GridObject
   protected Color color;	
   protected int dir = NONE;
 
-  public Obstacle()
+  public Obstacle(Coord loc)
   {
     color = Color.BLACK;
-    location = new Coord(0,0);
-  }
-  public void setLocation(Coord loc)
-  {
     location = new Coord(loc);
   }
-  public synchronized Coord getLocation()
-  {
-    return location;
-  }
-  public Color getColor()
-  {
-    return color;
-  }
-  public void setColor( Color c)
-  {
-    color = c;
-  }
-  public String getSymbol()
-  {
-    if (symbol == null || dir != NONE) return dirSymbols[dir];
-    return symbol;
-  }
-  public void setSymbol( String c)
-  {
-    symbol = c;
-  }
-  public int getDir()
-  {
-    return dir;
-  }
 }
+
+	
+//vim:ts=4:sw=4:et
