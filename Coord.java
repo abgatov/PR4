@@ -124,9 +124,6 @@ public class Coord implements Comparable<Coord>
        if(other.row == this.row && other.col == this.col) { return true; }
        else { return false; }
      }
-
-     //final Coord other = (Coord) obj;
-
      else {  return false;  }
   }
 
