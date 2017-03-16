@@ -1,6 +1,6 @@
 public class EastWestController extends CarController
 {
-	Grid actualGrid;
+    Grid actualGrid;
 
 	public EastWestController(Grid mainGrid)
 	{
@@ -62,7 +62,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return EAST;
                }
             }
             else
@@ -77,7 +77,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return EAST;
                }
             }
          }
@@ -103,7 +103,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return WEST;
                }
             }
             else
@@ -118,7 +118,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return WEST;
                }
             }
          }
@@ -143,7 +143,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return SOUTH;
                }
             }
          }
@@ -165,7 +165,7 @@ public class EastWestController extends CarController
                }
                else
                {
-               	  return new Coord(0,0);
+               	  return NORTH;
                }
             }
          }
