@@ -97,6 +97,8 @@ public class Coord implements Comparable<Coord>
      comparison1 = dist2(origin);
      comparison2 = dist2(other);
 
+     if(comparison2 == Integer.MAX_VALUE) { return Integer.MIN_VALUE; }
+
      if(comparison1 > comparison2)
      {
      	return 1;
