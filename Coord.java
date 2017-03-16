@@ -67,9 +67,9 @@ public class Coord implements Comparable<Coord>
     if (b == null) { return Integer.MAX_VALUE; }
     else
     {
-    	Double secondDistance = Math.pow((dist(b).row), 2) + Math.pow((dist(b).col), 2);
-    	int adjustedDistance = secondDistance.intValue();
-    	return adjustedDistance;
+      Double secondDistance = Math.pow((dist(b).row), 2) + Math.pow((dist(b).col), 2);
+      int adjustedDistance = secondDistance.intValue();
+      return adjustedDistance;
     }
   }
 
@@ -97,19 +97,17 @@ public class Coord implements Comparable<Coord>
      comparison1 = dist2(origin);
      comparison2 = dist2(other);
 
-     if(comparison2 == Integer.MAX_VALUE) { return Integer.MIN_VALUE; }
-
      if(comparison1 > comparison2)
      {
-     	return 1;
+      return 1;
      }
      else if(comparison1 < comparison2)
      {
-     	return -1;
+      return -1;
      }
      else
      {
-     	return 0;
+      return 0;
      }
   }
 
@@ -124,6 +122,9 @@ public class Coord implements Comparable<Coord>
        if(other.row == this.row && other.col == this.col) { return true; }
        else { return false; }
      }
+
+     //final Coord other = (Coord) obj;
+
      else {  return false;  }
   }
 

@@ -6,6 +6,7 @@
 import java.lang.Math;
 import java.util.ArrayList;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Grid creates a grid object which also hold
@@ -53,45 +54,29 @@ public class Grid implements GridInfo, CoordInfo
 	   	        gridInfo[i][j] = true;
 
 	   	        return true;
-	         }
+	         }	   	     
 	   	  }
 	   }
 	   return false;
 	}
 
-	// Return true if SharedCar  successfully loaded rider
+	// Return true if SharedCar  successfully loaded rider 
 	public boolean riderLoaded(SharedCar car)
 	{
-		rider.pickup(car);
-		if ((rider.waiting() != true) && (rider.getDriver() == car))
-		{
-			car.drive();
-			for(int i = 0; i < row; i++)
-      {
-				for(int j = 0; j < col; j++)
-       	{
-					if((gridInfo[i][j] == true) && (carInfo[i][j].equals(car) == false))
-       	  {
-						carInfo[i][j].roam();
-       	  }
-       	}
-      }
-			return true;
-		}
-		return  false;
+		return true;
 	}
 
 	/** Determine if a Coordinate is free
  	 * @param loc location to query
  	 * @return  true if loc is in bounds and available
- 	 *          else false.
+ 	 *          else false.  
  	 *          return false if loc is null
 	*/
 	public boolean coordFree(Coord loc)
 	{
 	   int i = loc.row;
 	   int j = loc.col;
-
+        
 	   if(i >= 0 && i< row)
 	   {
 	   	  if(j >= 0 && j< col)
@@ -117,12 +102,12 @@ public class Grid implements GridInfo, CoordInfo
        	        carInfo[i][j].drive();
        	     }
        	  }
-       }
+       }  
 	}
 
 	public boolean addCar()
 	{
-	   //REMEMBER TO POSSIBLY IMPLEMENT IF CAN IMPLEMENT RANDOM CARCONTROLLER CLASS
+	   return false; //REMEMBER TO POSSIBLY IMPLEMENT IF CAN IMPLEMENT RANDOM CARCONTROLLER CLASS
 	}
 
 	public boolean addCar(SharedCar newCar)
@@ -133,19 +118,24 @@ public class Grid implements GridInfo, CoordInfo
 	   i = newCar.getLocation().row;
 	   j = newCar.getLocation().col;
 
-	   if(gridInfo[i][j] == false)
+	   if(i >= 0 && i < row)
 	   {
-		  carInfo[i][j] = newCar;
-	      gridInfo[i][j] = true;
+	   	  if(j >= 0 && j < col)
+	   	  {
+	   	     if(gridInfo[i][j] == false)
+	         {
+		        carInfo[i][j] = newCar;
+	            gridInfo[i][j] = true;
 
-
-	      return true;
- 	   }
+	            return true; 
+ 	         }
+	   	  }
+	   }
 
        return false;
 	}
 
-	public boolean addCar(CarController actualController, Coord desiredLoc)
+	public boolean addCar(CarController actualController, Coord desiredLoc) 
 	{
        int testRow = 0;
 	   int testCol = 0;
@@ -164,7 +154,7 @@ public class Grid implements GridInfo, CoordInfo
 	            gridInfo[testRow][testCol] = true;
 
 	            return true;
- 	         }
+ 	         }	   	     
 	   	  }
 	   }
 
@@ -220,10 +210,10 @@ public class Grid implements GridInfo, CoordInfo
 
 	public boolean addRider()
 	{
-       RandomIntGenerator random1 = new RandomIntGenerator(0,row);
-       RandomIntGenerator random2 = new RandomIntGenerator(0,col);
-       int i = random1.nextValue();
-       int j = random2.nextValue();
+       Random random1 = new Random();
+       Random random2 = new Random();
+       int i = random1.nextInt(row);
+       int j = random2.nextInt(col);
 
        Coord testLoc = new Coord(i,j);
 
@@ -236,7 +226,7 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;
+       return false;     	   
 	}
 
 	public boolean addObstacle(Coord desiredLoc)
@@ -246,9 +236,9 @@ public class Grid implements GridInfo, CoordInfo
        Obstacle newObstacle = null;
 
 
-       if(i >= 0 && i<= row)
+       if(i >= 0 && i< row)
 	   {
-	   	  if(j >= 0 && j<= col)
+	   	  if(j >= 0 && j< col)
 	   	  {
 	         if(gridInfo[i][j] == false)
              {
@@ -260,15 +250,15 @@ public class Grid implements GridInfo, CoordInfo
 	   	  }
 	   }
 
-       return false;
+       return false;     
 	}
 
 	public boolean addObstacle()
 	{
-       RandomIntGenerator random1 = new RandomIntGenerator(0,row);
-       RandomIntGenerator random2 = new RandomIntGenerator(0,col);
-       int i = random1.nextValue();
-       int j = random2.nextValue();
+       Random random1 = new Random();
+       Random random2 = new Random();
+       int i = random1.nextInt(row);
+       int j = random2.nextInt(col);
 
        Coord testLoc = new Coord(i,j);
 
@@ -280,7 +270,7 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;
+       return false;     
 	}
 
 	@Override
@@ -313,9 +303,11 @@ public class Grid implements GridInfo, CoordInfo
 		   	     s += " ";
 		   	  }
 		   }// end first for loop
-
+           
            s += "\n";
 
 		} //end final for loop check for gridobjects
+
+		return s;
 	}
 }
