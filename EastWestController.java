@@ -30,13 +30,150 @@ public class EastWestController extends CarController
 
    public void setDefaultDirection()
    {
-    
+      direction = EAST;
    }
 
    // return the direction when driving 
    public Coord drive(Coord current, Coord goal)
    {
-      
+      Coord distToTarget = current.dist(goal);
+      int distX = distToTarget.row;
+      int distY = distToTarget.col;
+      int minDistance = distX + distY;
+      int countTravel = 0;
+ 
+      if(current.col > goal.col)
+      {
+         if(actualGrid.coordFree(current.add(WEST)))
+         {
+            return WEST;
+         }
+         else
+         {
+            if(current.row > goal.row)
+            {
+               if(actualGrid.coordFree(current.add(NORTH)))
+               {
+               	  return NORTH;
+               }
+               else if(actualGrid.coordFree(current.add(SOUTH)))
+               {
+               	  return SOUTH;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+            else
+            {
+               if(actualGrid.coordFree(current.add(SOUTH)))
+               {
+                  return SOUTH;
+               }
+               else if(actualGrid.coordFree(current.add(NORTH)))
+               {
+                  return NORTH;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+         }
+
+      }
+      else if(current.col < goal.col)
+      {
+         if(actualGrid.coordFree(current.add(EAST)))
+         {
+            return EAST;
+         }
+         else
+         {
+            if(current.row > goal.row)
+            {
+               if(actualGrid.coordFree(current.add(NORTH)))
+               {
+               	  return NORTH;
+               }
+               else if(actualGrid.coordFree(current.add(SOUTH)))
+               {
+               	  return SOUTH;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+            else
+            {
+               if(actualGrid.coordFree(current.add(SOUTH)))
+               {
+                  return SOUTH;
+               }
+               else if(actualGrid.coordFree(current.add(NORTH)))
+               {
+                  return NORTH;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+         }
+      }
+      else
+      {
+         if(current.row > goal.row)
+         {
+            if(actualGrid.coordFree(current.add(NORTH)))
+            {
+               return NORTH;
+            }
+            else
+            {
+               if(actualGrid.coordFree(current.add(EAST)))
+               {
+                  return EAST;
+               }
+               else if(actualGrid.coordFree(current.add(WEST)))
+               {
+               	  return WEST;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+         }
+         else if(current.row < goal.row)
+         {
+         	if(actualGrid.coordFree(current.add(SOUTH)))
+         	{
+               return SOUTH;
+            }
+            else
+            {
+               if(actualGrid.coordFree(current.add(EAST)))
+               {
+                  return EAST;
+               }
+               else if(actualGrid.coordFree(current.add(WEST)))
+               {
+               	  return WEST;
+               }
+               else
+               {
+               	  return new Coord(0,0);
+               }
+            }
+         }
+         else
+         {
+            return new Coord(0,0);
+         }
+      }  
    }
 
    public Coord getDirection()
