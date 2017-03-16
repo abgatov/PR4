@@ -33,20 +33,20 @@ public class Coord implements Comparable<Coord>
        this.col = 0;
    }
 
-  public Coord(Coord other) 
+  public Coord(Coord other)
   {
     this.row = other.row;
     this.col = other.col;
   }
 
-  public Coord(int row1, int col1) 
+  public Coord(int row1, int col1)
   {
     this.row = row1;
-    this.col = col1;	
+    this.col = col1;
   }
 
   //methods
-  public Coord dist(Coord b) 
+  public Coord dist(Coord b)
   {
     if (b == null) { return null; }
     else {
@@ -54,7 +54,7 @@ public class Coord implements Comparable<Coord>
     }
   }
 
-  public Coord diff(Coord b) 
+  public Coord diff(Coord b)
   {
     if (b == null) { return null; }
     else {
@@ -62,10 +62,10 @@ public class Coord implements Comparable<Coord>
     }
   }
 
-  public int dist2(Coord b) 
+  public int dist2(Coord b)
   {
     if (b == null) { return Integer.MAX_VALUE; }
-    else 
+    else
     {
     	Double secondDistance = Math.pow((dist(b).row), 2) + Math.pow((dist(b).col), 2);
     	int adjustedDistance = secondDistance.intValue();
@@ -79,10 +79,10 @@ public class Coord implements Comparable<Coord>
    else if ((row >= 0) && (col >= 0)) { return (new Coord(1,1)); }
    else if ((row >= 0) && (col < 0)) { return (new Coord(1,-1)); }
    else if ((row < 0) && (col >= 0)) { return (new Coord(-1,1)); }
-   else { return null; }
+   else { return (new Coord(0,0)); }
   }
 
-  public Coord add(Coord b) 
+  public Coord add(Coord b)
   {
     if (b == null) { return null; }
     else { return (new Coord(row + b.row,col + b.col)); }
@@ -96,7 +96,7 @@ public class Coord implements Comparable<Coord>
 
      comparison1 = dist2(origin);
      comparison2 = dist2(other);
-     
+
      if(comparison1 > comparison2)
      {
      	return 1;
@@ -114,8 +114,17 @@ public class Coord implements Comparable<Coord>
   @Override
   public boolean equals (Object obj)
   {
-     final Coord other = (Coord) obj;
-     if(other.row == this.row && other.col == this.col) { return true; }
+     if(obj == null) { return false; }
+
+     if(obj instanceof Coord)
+     {
+       Coord other = (Coord) obj;
+       if(other.row == this.row && other.col == this.col) { return true; }
+       else { return false; }
+     }
+
+     //final Coord other = (Coord) obj;
+
      else {  return false;  }
   }
 
