@@ -42,9 +42,9 @@ public class Grid implements GridInfo, CoordInfo
 	   int i = loc.row;
 	   int j = loc.col;
 
-       if(i >= 0 && i<= row)
+       if(i >= 0 && i< row)
 	   {
-	   	  if(j >= 0 && j<= col)
+	   	  if(j >= 0 && j< col)
 	   	  {
              if(gridInfo[i][j] == false)
 	         {
@@ -53,32 +53,48 @@ public class Grid implements GridInfo, CoordInfo
 	   	        gridInfo[i][j] = true;
 
 	   	        return true;
-	         }	   	     
+	         }
 	   	  }
 	   }
 	   return false;
 	}
 
-	// Return true if SharedCar  successfully loaded rider 
+	// Return true if SharedCar  successfully loaded rider
 	public boolean riderLoaded(SharedCar car)
 	{
-		return true;
+		rider.pickup(car);
+		if ((rider.waiting() != true) && (rider.getDriver() == car))
+		{
+			car.drive();
+			for(int i = 0; i < row; i++)
+      {
+				for(int j = 0; j < col; j++)
+       	{
+					if((gridInfo[i][j] == true) && (carInfo[i][j].equals(car) == false))
+       	  {
+						carInfo[i][j].roam();
+       	  }
+       	}
+      }
+			return true;
+		}
+		return  false;
 	}
 
 	/** Determine if a Coordinate is free
  	 * @param loc location to query
  	 * @return  true if loc is in bounds and available
- 	 *          else false.  
+ 	 *          else false.
  	 *          return false if loc is null
 	*/
 	public boolean coordFree(Coord loc)
 	{
 	   int i = loc.row;
 	   int j = loc.col;
-        
-	   if(i >= 0 && i<= row)
+
+	   if(i >= 0 && i< row)
 	   {
-	   	  if(j >= 0 && j<= col)
+	   	  if(j >= 0 && j< col)
 	   	  {
 	   	     if(gridInfo[i][j] == false)
 	   	     {
@@ -101,7 +117,7 @@ public class Grid implements GridInfo, CoordInfo
        	        carInfo[i][j].drive();
        	     }
        	  }
-       }  
+       }
 	}
 
 	public boolean addCar()
@@ -129,7 +145,7 @@ public class Grid implements GridInfo, CoordInfo
        return false;
 	}
 
-	public boolean addCar(CarController actualController, Coord desiredLoc) 
+	public boolean addCar(CarController actualController, Coord desiredLoc)
 	{
        int testRow = 0;
 	   int testCol = 0;
@@ -137,9 +153,9 @@ public class Grid implements GridInfo, CoordInfo
        testRow = desiredLoc.row;
        testCol = desiredLoc.col;
 
-       if(testRow >= 0 && testRow<= row)
+       if(testRow >= 0 && testRow< row)
 	   {
-	   	  if(testCol >= 0 && testCol<= col)
+	   	  if(testCol >= 0 && testCol< col)
 	   	  {
              if(gridInfo[testRow][testCol] == false)
 	         {
@@ -148,7 +164,7 @@ public class Grid implements GridInfo, CoordInfo
 	            gridInfo[testRow][testCol] = true;
 
 	            return true;
- 	         }	   	     
+ 	         }
 	   	  }
 	   }
 
@@ -184,9 +200,9 @@ public class Grid implements GridInfo, CoordInfo
 	   j = desiredLoc.col;
 
 
-       if(i >= 0 && i<= row)
+       if(i >= 0 && i< row)
 	   {
-	   	  if(j >= 0 && j<= col)
+	   	  if(j >= 0 && j< col)
 	   	  {
 	         if(gridInfo[i][j] == false)
 	         {
@@ -220,7 +236,7 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;     	   
+       return false;
 	}
 
 	public boolean addObstacle(Coord desiredLoc)
@@ -244,7 +260,7 @@ public class Grid implements GridInfo, CoordInfo
 	   	  }
 	   }
 
-       return false;     
+       return false;
 	}
 
 	public boolean addObstacle()
@@ -264,7 +280,7 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;     
+       return false;
 	}
 
 	@Override
@@ -297,7 +313,7 @@ public class Grid implements GridInfo, CoordInfo
 		   	     s += " ";
 		   	  }
 		   }// end first for loop
-           
+
            s += "\n";
 
 		} //end final for loop check for gridobjects
