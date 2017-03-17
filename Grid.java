@@ -1,5 +1,5 @@
 /**
- * @author Antonio Martorana, Alex Bgatov
+ * @author Antonio Martorana, Aleksandr Bgatov
  * @version March 10, 2017
  */
 
@@ -14,31 +14,58 @@ import java.util.Random;
  */
 public class Grid implements GridInfo, CoordInfo
 {
+   /**
+    * the index representing the row of the coordinates
+    */
    private int row;
+   /**
+    * the index representing the column of the coordinates
+    */
    private int col;
-   private int originX;
-   private int originY;
+   /**
+    * array used to store location of cars on a grid
+    */
    private SharedCar [][] carInfo;
+   /**
+    * array used to store location of obstacles on a grid
+    */
    private Obstacle [][] obstacleInfo;
+   /**
+    * array used to store location of free grid spaces and occupied spaces
+    * in the form of booleans
+    */
    private boolean [][] gridInfo;
+   /**
+    * an object of type Rider used to store information about the rider
+    */
    private Rider rider;
-   private final int HALF = 2;
-   private SharedCar manualCar;
+   /**
+    * array used to store location of obstacles on a grid
+    */
 
+   /**
+    *Constructor initializing rows and columns to carInfo,
+    *obstacleInfo and gridInfo arrays of dimension[rows][cols]
+    *@param rows index representing the row of the coordinates
+    *@param col index representing the columns of the coordinates
+    */
    public Grid (int rows, int cols)
    {
       this.row = Math.abs(rows);
       this.col = Math.abs(cols);
-
-      originX = row / HALF;
-      originY = col / HALF;
 
       carInfo = new SharedCar [rows][cols];
       obstacleInfo = new Obstacle [rows][cols];
       gridInfo = new boolean [rows][cols];
    }
 
-   // Return true if SharedCar succesfully claimed the location
+  /**
+   * Determine if SharedCar succesfully claimed the location
+   * @param car type SharedCar with information on a car
+   * @param loc coordinate giving location of car
+   * @return a boolean representing a successful addition of car to a gridspace
+   * if true and not successful if false.
+   */
 	public boolean claim(SharedCar car, Coord loc)
 	{
 	   int i = loc.row;
@@ -55,45 +82,34 @@ public class Grid implements GridInfo, CoordInfo
 	   	        gridInfo[i][j] = true;
 
 	   	        return true;
-	         }	   	     
+	         }
 	   	  }
 	   }
 	   return false;
 	}
 
-	// Return true if SharedCar  successfully loaded rider 
+	/**
+  * Determine if SharedCar successfully loaded rider
+  * @param car type SharedCar with information on a car
+  * @return a boolean representing a successful pickup of rider to a car if true
+  */
 	public boolean riderLoaded(SharedCar car)
 	{
-		rider.pickUp(car);
- 		if ((rider.waiting() != true) && (rider.getDriver() == car))
- 		{
- 			car.drive();
- 			for(int i = 0; i < row; i++)
-            {
- 				for(int j = 0; j < col; j++)
-        	    {
-					if((gridInfo[i][j] == true) && (carInfo[i][j].equals(car) == false))
-        	        {
- 					 	carInfo[i][j].roam();
-	                }
-	            }    
-        	}
- 			return true;
- 		}
- 		return  false;
+		return true;
 	}
 
-	/** Determine if a Coordinate is free
+	/**
+   *Determine if a Coordinate is free
  	 * @param loc location to query
  	 * @return  true if loc is in bounds and available
- 	 *          else false.  
+ 	 *          else false.
  	 *          return false if loc is null
-	*/
+	 */
 	public boolean coordFree(Coord loc)
 	{
 	   int i = loc.row;
 	   int j = loc.col;
-        
+
 	   if(i >= 0 && i< row)
 	   {
 	   	  if(j >= 0 && j< col)
@@ -104,10 +120,12 @@ public class Grid implements GridInfo, CoordInfo
 	   	     }
 	   	  }
 	   }
-
 	   return false;
 	}
 
+  /**
+  * invokes the drive method of carInfo for each gridspace with an object
+  */
 	public void drive()
 	{
        for(int i = 0; i < row; i++)
@@ -119,40 +137,14 @@ public class Grid implements GridInfo, CoordInfo
        	        carInfo[i][j].drive();
        	     }
        	  }
-       }  
+       }
 	}
 
-	public boolean addCar()
-	{
-	   Random random1 = new Random();
-       Random random2 = new Random();
-       int i = random1.nextInt(row);
-       int j = random2.nextInt(col);
-
-       Coord testLoc = new Coord(i,j);
-
-       if(manualCar == null)
-       {
-       	  manualCar = new SharedCar(new ManualController(this),this);
-       	  manualCar.setColor(Color.RED);
-       	  carInfo[originX][originY] = manualCar;
-       	  gridInfo[originX][originY] = true;
-       	  manualCar.setLocation(new Coord(originX,originY));
-
-       	  return true;
-       }
-       else if (gridInfo[i][j] == false)
-       {
-       	  gridInfo[i][j] = true;
-          carInfo[i][j] = new SharedCar(new EastWestController(this),this);
-          carInfo[i][j].setLocation(testLoc);
-
-          return true;
-       }
-
-       return false; 
-	}
-
+  /**
+  * adds a car of type SharedCar
+  * @param newCar car to add
+  * @return true if car can be added and is added, false if not added
+  */
 	public boolean addCar(SharedCar newCar)
 	{
 	   int i = 0;
@@ -170,7 +162,7 @@ public class Grid implements GridInfo, CoordInfo
 		        carInfo[i][j] = newCar;
 	            gridInfo[i][j] = true;
 
-	            return true; 
+	            return true;
  	         }
 	   	  }
 	   }
@@ -178,17 +170,14 @@ public class Grid implements GridInfo, CoordInfo
        return false;
 	}
 
-	public void driveReal()
-	{
-	   manualCar.drive();
-	}
-
-	public SharedCar humanCar()
-	{
-	   return manualCar;
-	}
-
-	public boolean addCar(CarController actualController, Coord desiredLoc) 
+  /**
+  * adds a car at a specific location with a specific controller
+  * @param desiredLoc location where to add car
+  * @param actualController controller that will decide where the car moves
+  * when in drive
+  * @return true if car can be added and is added, false if not added
+  */
+	public boolean addCar(CarController actualController, Coord desiredLoc)
 	{
        int testRow = 0;
 	   int testCol = 0;
@@ -207,7 +196,7 @@ public class Grid implements GridInfo, CoordInfo
 	            gridInfo[testRow][testCol] = true;
 
 	            return true;
- 	         }	   	     
+ 	         }
 	   	  }
 	   }
 
@@ -215,6 +204,11 @@ public class Grid implements GridInfo, CoordInfo
 	} //Remember that actualController must be converted from String to CarController in main method after being parsed
 	  //from GridSetup
 
+  /**
+  * adds a rider to the grid, specifically gridInfo
+  * @param rider the rider to add to the grid
+  * @return true if rider can be added and is added, false if not added
+  */
 	public boolean addRider(Rider rider)
 	{
 	   int i = 0;
@@ -234,6 +228,11 @@ public class Grid implements GridInfo, CoordInfo
 	   return false;
 	}
 
+  /**
+  * adds a rider to the grid at a specific location
+  * @param desiredLoc location where a new rider is added to the grid
+  * @return true if rider can be added and is added, false if not added
+  */
 	public boolean addRider (Coord desiredLoc)
 	{
 	   int i = 0;
@@ -261,6 +260,10 @@ public class Grid implements GridInfo, CoordInfo
 	   return false;
 	}
 
+  /**
+  * adds a rider to the grid at a random location
+  * @return true if rider can be added and is added, false if not added
+  */
 	public boolean addRider()
 	{
        Random random1 = new Random();
@@ -279,9 +282,14 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;     	   
+       return false;
 	}
 
+  /**
+  * adds an obstacle to the grid at specific location
+  * @param desiredLoc location where a new obstacle is added to the grid
+  * @return true if obstacle can be added and is added, false if not added
+  */
 	public boolean addObstacle(Coord desiredLoc)
 	{
        int i = desiredLoc.row;
@@ -303,9 +311,13 @@ public class Grid implements GridInfo, CoordInfo
 	   	  }
 	   }
 
-       return false;     
+       return false;
 	}
 
+  /**
+  * adds an obstacle to the grid at a random location
+  * @return true if obstacle can be added and is added, false if not added
+  */
 	public boolean addObstacle()
 	{
        Random random1 = new Random();
@@ -323,14 +335,12 @@ public class Grid implements GridInfo, CoordInfo
        	  return true;
        }
 
-       return false;     
+       return false;
 	}
 
-	public void update()
-	{
-	   drive();
-	}
-
+  /**
+  * Overrides toString to print out a grid with a boundary
+  */
 	@Override
 	public String toString()
 	{
@@ -361,7 +371,7 @@ public class Grid implements GridInfo, CoordInfo
 		   	     s += " ";
 		   	  }
 		   }// end first for loop
-           
+
            s += "\n";
 
 		} //end final for loop check for gridobjects

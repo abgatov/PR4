@@ -4,13 +4,6 @@
  * @version March 16, 2017
  */
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.event.*;
-import java.util.*;
-import java.awt.*;
-import java.lang.*;
-
 public class ManualController extends CarController implements KeyListener
 {
 	Grid actualGrid;
@@ -40,16 +33,12 @@ public void keyPressed(KeyEvent evt) {
     }
 
     else if (key == KeyEvent.VK_SPACE) {
-        actualGrid.driveReal();
+        drive();
     }
 }
 
-public void keyReleased(KeyEvent evt)
-{
-}
-public void keyTyped(KeyEvent evt)
-{
-}
+
+
 
  // return the direction when roaming
  public Coord roam(Coord current)
@@ -65,10 +54,5 @@ public void keyTyped(KeyEvent evt)
  public Coord getDirection()
  {
 	 return direction;
- }
-
- public void setDefaultDirection()
- {
-   direction = EAST;
  }
 }
