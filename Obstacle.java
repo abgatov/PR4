@@ -1,7 +1,9 @@
 /**
- * @author Antonio Martorana, Alex Bgatov
- * @version March 8, 2017
+ * Obstacle represents a non-movable object on a grid
+ * @author Antonio Martorana, Aleksandr Bgatov
+ * @version March 16, 2017
  */
+
 
 import java.awt.Color;
 
@@ -13,11 +15,11 @@ public class Obstacle extends GridObject
   public static final int DOWN = 2;
   public static final int LEFT =  3;
   public static final int RIGHT =  4;
-  protected String [] dirSymbols = {"#","^","v","<",">"}; 
+  protected String [] dirSymbols = {"#","^","v","<",">"};
 
   protected Coord location;
   protected String symbol = null;
-  protected Color color;	
+  protected Color color;
   protected int dir = NONE;
 
   public Obstacle(Coord loc)
@@ -27,5 +29,5 @@ public class Obstacle extends GridObject
   }
 }
 
-	
+
 //vim:ts=4:sw=4:et

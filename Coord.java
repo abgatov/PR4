@@ -1,5 +1,5 @@
 /**
- * @author Antonio Martorana, Alex Bgatov
+ * @author Antonio Martorana, Aleksandr Bgatov
  * @version March 8, 2017
  */
 

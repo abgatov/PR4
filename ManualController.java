@@ -1,3 +1,9 @@
+/**
+ * ManualController lets you decide which direction the player will move on a grid
+ * @author Antonio Martorana, Aleksandr Bgatov
+ * @version March 16, 2017
+ */
+
 public class ManualController extends CarController implements KeyListener
 {
 	Grid actualGrid;

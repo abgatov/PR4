@@ -1,3 +1,9 @@
+/**
+ * NorthSouthController determines which direction SharedCar should move on a grid
+ * @author Antonio Martorana, Aleksandr Bgatov
+ * @version March 16, 2017
+ */
+
 public class NorthSouthController extends CarController
 {
     Grid actualGrid;
@@ -8,7 +14,7 @@ public class NorthSouthController extends CarController
        actualGrid = mainGrid;
 	}
 
-   // return the direction when roaming 
+   // return the direction when roaming
    public Coord roam(Coord current)
    {
       if(actualGrid.coordFree(current))
@@ -24,7 +30,7 @@ public class NorthSouthController extends CarController
          else
          {
             return NORTH;
-         } 
+         }
       }
    }
 
@@ -33,7 +39,7 @@ public class NorthSouthController extends CarController
       direction = NORTH;
    }
 
-   // return the direction when driving 
+   // return the direction when driving
    public Coord drive(Coord current, Coord goal)
    {
       Coord distToTarget = current.dist(goal);
@@ -41,7 +47,7 @@ public class NorthSouthController extends CarController
       int distY = distToTarget.col;
       int minDistance = distX + distY;
       int countTravel = 0;
- 
+
       if(current.row > goal.row)
       {
          if(actualGrid.coordFree(current.add(NORTH)))
@@ -173,7 +179,7 @@ public class NorthSouthController extends CarController
          {
             return new Coord(0,0);
          }
-      }  
+      }
    }
 
    public Coord getDirection()
