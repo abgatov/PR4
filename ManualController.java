@@ -27,7 +27,7 @@ public void keyPressed(KeyEvent evt) {
     }
 
     else if (key == KeyEvent.VK_SPACE) {
-        //;
+        drive();
     }
 }
 
