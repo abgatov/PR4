@@ -1,0 +1,4 @@
+dimension 10 10
+rider 5 8
+robocar 2 5 north
+obstacle 4 1
