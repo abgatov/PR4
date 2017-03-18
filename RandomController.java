@@ -1,8 +1,3 @@
-/**
- * @author Antonio Martorana, Aleksandr Bgatov
- * @version March 10, 2017
- */
-
 import java.util.Random;
 
 public class RandomController extends CarController
@@ -91,6 +86,7 @@ public class RandomController extends CarController
            }
          }
 			}
+			return new Coord(0,0);
    }
 
 
@@ -111,15 +107,15 @@ public class RandomController extends CarController
 				if ((current.col < goal.col) && (current.row < goal.row)) //C1 = NW of goal
 				{
 			  	Coord temp1 = new Coord(current.row+1,current.col);
-					if (coordFree(temp1)) //checks if coordinate is free
+					if (actualGrid.coordFree(temp1)) //checks if coordinate is free
 					{
 						return SOUTH;
 					}
-					else if(coordFree(temp1.add(EAST))) //if not free checks surrounding spaces
+					else if(actualGrid.coordFree(temp1.add(EAST))) //if not free checks surrounding spaces
 					{
 						return EAST;
 					}
-					else if(coordFree(temp1.add(WEST)))
+					else if(actualGrid.coordFree(temp1.add(WEST)))
 					{
 						return WEST;
 					}
@@ -131,15 +127,15 @@ public class RandomController extends CarController
 				else if ((current.col > goal.col) && (current.row < goal.row)) //C3 = NE of goal
 				{
 			  	Coord temp1 = new Coord(current.row+1,current.col);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return SOUTH;
 					}
-					else if(coordFree(temp1.add(WEST)))
+					else if(actualGrid.coordFree(temp1.add(WEST)))
 					{
 						return WEST;
 					}
-					else if(coordFree(temp1.add(EAST)))
+					else if(actualGrid.coordFree(temp1.add(EAST)))
 					{
 						return EAST;
 					}
@@ -151,15 +147,15 @@ public class RandomController extends CarController
 				if ((current.col < goal.col) && (current.row > goal.row)) //C5 = SW of goal
 				{
 			  	Coord temp1 = new Coord(current.row-1,current.col);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return NORTH;
 					}
-					else if(coordFree(temp1.add(EAST)))
+					else if(actualGrid.coordFree(temp1.add(EAST)))
 					{
 						return EAST;
 					}
-					else if(coordFree(temp1.add(WEST)))
+					else if(actualGrid.coordFree(temp1.add(WEST)))
 					{
 						return WEST;
 					}
@@ -171,15 +167,15 @@ public class RandomController extends CarController
 				if ((current.col > goal.col) && (current.row > goal.row)) //C7 = SE of goal
 				{
 			  	Coord temp1 = new Coord(current.row-1,current.col);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return NORTH;
 					}
-					else if(coordFree(temp1.add(WEST)))
+					else if(actualGrid.coordFree(temp1.add(WEST)))
 					{
 						return WEST;
 					}
-					else if(coordFree(temp1.add(EAST)))
+					else if(actualGrid.coordFree(temp1.add(EAST)))
 					{
 						return EAST;
 					}
@@ -194,15 +190,15 @@ public class RandomController extends CarController
 				if ((current.col < goal.col) && (current.row < goal.row)) //C2 = NW
 				{
 			  	Coord temp1 = new Coord(current.row,current.col+1);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return EAST;
 					}
-					else if(coordFree(temp1.add(SOUTH)))
+					else if(actualGrid.coordFree(temp1.add(SOUTH)))
 					{
 						return SOUTH;
 					}
-					else if(coordFree(temp1.add(NORTH)))
+					else if(actualGrid.coordFree(temp1.add(NORTH)))
 					{
 						return NORTH;
 					}
@@ -214,15 +210,15 @@ public class RandomController extends CarController
 				else if ((current.col > goal.col) && (current.row < goal.row)) //C4 = NE
 				{
 			  	Coord temp1 = new Coord(current.row,current.col-1);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return WEST;
 					}
-					else if(coordFree(temp1.add(SOUTH)))
+					else if(actualGrid.coordFree(temp1.add(SOUTH)))
 					{
 						return SOUTH;
 					}
-					else if(coordFree(temp1.add(NORTH)))
+					else if(actualGrid.coordFree(temp1.add(NORTH)))
 					{
 						return NORTH;
 					}
@@ -234,15 +230,15 @@ public class RandomController extends CarController
 				if ((current.col < goal.col) && (current.row > goal.row)) //C6 = SW
 				{
 			  	Coord temp1 = new Coord(current.row,current.col+1);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return WEST;
 					}
-					else if(coordFree(temp1.add(NORTH)))
+					else if(actualGrid.coordFree(temp1.add(NORTH)))
 					{
 						return NORTH;
 					}
-					else if(coordFree(temp1.add(SOUTH)))
+					else if(actualGrid.coordFree(temp1.add(SOUTH)))
 					{
 						return SOUTH;
 					}
@@ -254,15 +250,15 @@ public class RandomController extends CarController
 				if ((current.col > goal.col) && (current.row > goal.row)) //C8 = SE
 				{
 			  	Coord temp1 = new Coord(current.row,current.col-1);
-					if (coordFree(temp1))
+					if (actualGrid.coordFree(temp1))
 					{
 						return EAST;
 					}
-					else if(coordFree(temp1.add(NORTH)))
+					else if(actualGrid.coordFree(temp1.add(NORTH)))
 					{
 						return NORTH;
 					}
-					else if(coordFree(temp1.add(SOUTH)))
+					else if(actualGrid.coordFree(temp1.add(SOUTH)))
 					{
 						return SOUTH;
 					}
@@ -271,7 +267,9 @@ public class RandomController extends CarController
 						return WEST;
 					}
 			  }
+
 			}
+			return new Coord(0,0);
    }
 
    public Coord getDirection()
